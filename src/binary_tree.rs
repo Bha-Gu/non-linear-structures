@@ -41,6 +41,20 @@ impl<T: Clone + PartialEq + Debug> Node<T> {
         };
         Self { value, left, right }
     }
+
+    fn dfs(&self) {
+        if let Some(left) = self.left.clone() {
+            print!("(");
+            Self::dfs(&left.borrow().clone());
+            print!("<-");
+        }
+        print!("{:?}", self.value.clone());
+        if let Some(right) = self.right.clone() {
+            print!("->");
+            Self::dfs(&right.borrow().clone());
+            print!(")");
+        }
+    }
 }
 
 pub struct BinaryTree<T>
@@ -69,5 +83,14 @@ impl<T: Clone + PartialEq + Debug> BinaryTree<T> {
             let root = Some(Rc::new(RefCell::new(Node::from_vec_dfs(vec))));
             Self { root }
         }
+    }
+
+    pub fn dfs(&self) {
+        if let Some(root) = self.root.clone() {
+            Node::dfs(&root.borrow().clone());
+            println!();
+        } else {
+            println!("Tree is Empty");
+        };
     }
 }
