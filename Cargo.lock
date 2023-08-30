@@ -3,5 +3,13 @@
 version = 3
 
 [[package]]
+name = "linear_structures"
+version = "0.1.0"
+source = "git+https://github.com/Bha-Gu/linear-structures#acaa5f71d8a18fa0a60ebafbf902941ba7311324"
+
+[[package]]
 name = "non-linear-structures"
 version = "0.1.0"
+dependencies = [
+ "linear_structures",
+]

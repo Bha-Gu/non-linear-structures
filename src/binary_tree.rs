@@ -1,3 +1,4 @@
+use linear_structures::queue;
 use std::{cell::RefCell, fmt::Debug, rc::Rc};
 
 #[derive(Clone)]
@@ -55,6 +56,21 @@ impl<T: Clone + PartialEq + Debug> Node<T> {
             print!(")");
         }
     }
+
+    fn bfs(&self) {
+        let mut a = queue::Queue::new();
+        a.enqueue(self.clone());
+        while let Some(node) = a.deque() {
+            print!("{:?} ", node.value.clone());
+            if let Some(left) = node.left.clone() {
+                a.enqueue(left.borrow().clone());
+            }
+            if let Some(right) = node.right.clone() {
+                a.enqueue(right.borrow().clone());
+            }
+        }
+        println!();
+    }
 }
 
 pub struct BinaryTree<T>
@@ -92,5 +108,13 @@ impl<T: Clone + PartialEq + Debug> BinaryTree<T> {
         } else {
             println!("Tree is Empty");
         };
+    }
+
+    pub fn bfs(&self) {
+        if let Some(node) = self.root.clone() {
+            Node::bfs(&node.borrow().clone());
+        } else {
+            println!("The tree is empty");
+        }
     }
 }
